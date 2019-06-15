@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-database.js"></script>
+  </head>
+  <body>
+    
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container">
+          <h1 class="display-3">Employee Data Management</h1>
+          <p class="lead">A Comprehensive Database of Employee Billable Hours</p>
+      </div>
+  </div>
+  <div class="container">
+      
+      <!-- Section 1 - Add Employee -->
+      <div class="row">
+          <form class="col-md-12" id="form">
+      <!-- Section 2 - Current Employee -->
+      <div class="row">
+              <div class="col-md-12">
+                  <label>
+                      <h2>Current Train Schedule</h2>
+                  </label>
+                  <table class="table table-hover">
+                      <thead>
+                          <tr>
+                              <th scope="col">Train Name</th>
+                              <th scope="col">Destination</th>
+                              <th scope="col">Frequency (min)</th>
+                              <th scope="col">Next Arrival</th>
+                              <th scope="col">Minutes Away</th>
+                          </tr>
+                      </thead>
+                      <!-- Data -->
+                      <tbody id="trains">
+                          <!-- <tr>
+                              <td scope="row"></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                          </tr> -->
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+              <label>
+                  <h2>Add Train</h2>
+              </label>
+              <div class="form-group">
+                  <label for="trainName">Train Name:</label>
+                  <input type="text" class="form-control" id="trainName" placeholder="Eurostar">
+              </div>
+              <div class="form-group">
+                  <label for="destination">Destination:</label>
+                  <input type="text" class="form-control" id="destination" placeholder="London">
+              </div>
+              <div class="form-group">
+                  <label for="trainTime">First Train Time (HH:mm - military time)</label>
+                  <input type="text" class="form-control" id="trainTime" placeholder="19:00">
+              </div>
+              <div class="form-group">
+                  <label for="frequency">Frequency (min):</label>
+                  <input type="text" class="form-control" id="frequency" placeholder="60">
+              </div>
+              <button class="btn btn-primary" id='submit-employee' type='submit'>Submit</button>
+              <button class="btn btn-primary" id='clear'>Clear</button>
+          </form>
+      </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script
+    src="https://code.jquery.com/jquery-3.4.1.js"
+    integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+    crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>

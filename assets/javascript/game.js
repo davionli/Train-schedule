@@ -14,11 +14,23 @@ var trainName;
 var trainDestination;
 var trainFrequency;
 var trainTime;
+var trainKey;
 var interval = 1000 * 60;
 var intervalId = setInterval(function() {
     getData();
 }, interval);
 getData();
+
+$("#trains").on("click", ".cross", function() {
+    var id = $(this).parent().attr("data-id");
+    database.ref(`/${id}`).remove();
+    getData();
+});
+
+// $("#trains").on("click", ".trainInfo", function() {
+//     console.log($(this).children(".trainName")).val();
+//     $("trainName").val($(this).children(".trainName"));
+// })
 function getData() {
     $("#trains").empty();
     database.ref().on("child_added", function(snapshot) {
@@ -26,6 +38,7 @@ function getData() {
         trainDestination = snapshot.val().destination;
         trainFrequency = parseInt(snapshot.val().frequency);
         trainTime = snapshot.val().time;
+        trainKey = snapshot.val().key;
         postTrain();
     });
 }
@@ -35,7 +48,7 @@ function findTime() {
     var min = parseInt(getTime.split(":")[1].split(" ")[0]);
     var hr = parseInt(getTime.split(":")[0]);
     if (hr === 12)
-        hr -= 12;
+        hr = 0;
     if (getTime.split(" ")[1] === "PM")
         hr += 12;
     var currTime = hr * 60 + min;
@@ -77,6 +90,7 @@ function postTrain() {
     var newFrequency = $("<td>");
     var newArrival = $("<td>");
     var newMinutes = $("<td>");
+    var cross = $("<td>");
     var minutesAway;
     
     if (findTime() <= 0) {
@@ -85,7 +99,7 @@ function postTrain() {
     else {
         minutesAway = trainFrequency - findTime() % trainFrequency;
     }
-    newName.text(trainName).appendTo(newTrain);
+    newName.attr("class", "trainName").text(trainName).appendTo(newTrain);
     newDestination.text(trainDestination).appendTo(newTrain);
     newFrequency.text(trainFrequency).appendTo(newTrain);
     if (findTime() <= 0) {
@@ -95,6 +109,10 @@ function postTrain() {
         newArrival.text(countTime(minutesAway)).appendTo(newTrain);
     }
     newMinutes.text(minutesAway).appendTo(newTrain);
+    cross.text("x");
+    cross.attr("class", "cross").appendTo(newTrain);
+    newTrain.addClass("trainInfo");
+    newTrain.attr("data-id", trainKey);
     newTrain.appendTo($("#trains"));
 }
 
@@ -105,13 +123,15 @@ $("#submit-train").on("click", function(event) {
     trainFrequency = parseInt($("#frequency").val());
     trainTime = $("#trainTime").val();
 
-    database.ref().push({
-      name: trainName,
-      destination: trainDestination,
-      frequency: trainFrequency,
-      time: trainTime
-    })
-  
+    trainKey = database.ref().push().key;
+    database.ref(`/${trainKey}`).set({
+        name: trainName,
+        destination: trainDestination,
+        frequency: trainFrequency,
+        time: trainTime,
+        key: trainKey
+    }).key;
+    getData();
 });
 
 $("#clear").on("click", function(event) {
